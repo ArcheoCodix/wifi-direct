@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PluginListenerHandle, Plugins} from '@capacitor/core';
-import {WifiP2pDevice} from 'capacitor-wifi-direct';
+import {WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
 
 const { App, WifiDirect } = Plugins;
 
@@ -20,6 +20,7 @@ export class HomePage implements OnInit, OnDestroy {
   onDiscovering = false;
   stateListener: PluginListenerHandle;
   requestListener: PluginListenerHandle;
+  infoListener: PluginListenerHandle;
 
   constructor() {}
 
@@ -27,10 +28,18 @@ export class HomePage implements OnInit, OnDestroy {
     this.stateListener = WifiDirect.addListener('wifiStateChanged', (state: {isEnabled: boolean}) => {
       this.wifiState = 'Wifi ' + (state.isEnabled ? 'on' : 'off');
     });
+
+    this.infoListener = WifiDirect.addListener('connectionInfoAvailable', (info: WifiP2pInfo) => {
+        console.log(info);
+        if (info.groupFormed) {
+            this.status += ' ' + (info.isGroupOwner ? 'Host' : 'Client');
+        }
+    });
   }
 
   ngOnDestroy() {
-    this.stateListener.remove();
+    if (this.stateListener) { this.stateListener.remove(); }
+    if (this.infoListener) { this.infoListener.remove(); }
   }
 
   startDiscoveringPeers() {
@@ -63,6 +72,7 @@ export class HomePage implements OnInit, OnDestroy {
         .then(() => {
           this.onDiscovering = false;
           this.requestListener.remove();
+          console.log(this.requestListener);
           this.status = 'Discovery stopped';
         })
         .catch(err => {
@@ -70,5 +80,16 @@ export class HomePage implements OnInit, OnDestroy {
           this.onDiscovering = true;
           this.status = 'Stopping discovery failed';
         });
+  }
+
+  connection(device: WifiP2pDevice) {
+      WifiDirect.connection({ device })
+          .then(() => {
+              this.status = 'Connected';
+          })
+          .catch(reason => {
+              console.log(reason);
+              this.status = 'Connection failed';
+          });
   }
 }
