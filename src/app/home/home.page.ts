@@ -13,6 +13,7 @@ export class HomePage implements OnInit, OnDestroy {
   wifiState: string;
   status = 'Sleep';
   msgs: string;
+  devices: WifiP2pDevice[];
 
   msgWriting: string;
 
@@ -24,9 +25,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.stateListener = WifiDirect.addListener('wifiStateChanged', (state: {isEnabled: boolean}) => {
-      console.log(state.isEnabled);
       this.wifiState = 'Wifi ' + (state.isEnabled ? 'on' : 'off');
-      console.log(this.wifiState);
     });
   }
 
@@ -41,7 +40,7 @@ export class HomePage implements OnInit, OnDestroy {
           this.onDiscovering = true;
 
           this.requestListener = WifiDirect.addListener('peersDiscovered', (req: {devices: WifiP2pDevice[]}) => {
-            console.log(req.devices);
+            this.devices = req.devices;
           });
         })
         .catch(err => {

@@ -15,6 +15,8 @@
     {{ onDiscovering ? 'Stop' : 'Discover'}}
   </ion-button>
 
+  <app-peers-devices [devices]="devices"></app-peers-devices>
+
   <ion-textarea>{{ msgs }}</ion-textarea>
   <ion-textarea (ionChange)="writeMsg($event)"></ion-textarea>
 
