@@ -1,0 +1,11 @@
+<ion-card *ngFor="let device of devices">
+  <ion-card-header>
+    <ion-card-subtitle>{{device.deviceAddress}}</ion-card-subtitle>
+    <ion-card-title>{{device.deviceName}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-label>{{device.primaryDeviceType}}</ion-label>
+    <ion-label>{{ deviceState(device.status) }}</ion-label>
+  </ion-card-content>
+</ion-card>
