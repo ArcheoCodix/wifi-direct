@@ -10,7 +10,10 @@
   <h3>{{ wifiState }}</h3>
   <h3>{{ status }}</h3>
 
-  <ion-button (click)="discoverPeers()">Discover</ion-button>
+  <ion-spinner *ngIf="onDiscovering" name="dots"></ion-spinner>
+  <ion-button (click)="onDiscovering ? stopDiscoveringPeers() : startDiscoveringPeers()">
+    {{ onDiscovering ? 'Stop' : 'Discover'}}
+  </ion-button>
 
   <ion-textarea>{{ msgs }}</ion-textarea>
   <ion-textarea (ionChange)="writeMsg($event)"></ion-textarea>

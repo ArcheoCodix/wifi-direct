@@ -1,36 +1,52 @@
-import { Component } from '@angular/core';
-import {Plugins} from '@capacitor/core';
-// import {WifiDirect} from 'capacitor-wifi-direct';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {PluginListenerHandle, Plugins} from '@capacitor/core';
+import {WifiP2pDevice} from 'capacitor-wifi-direct';
 
-const { WifiDirect } = Plugins;
+const { App, WifiDirect } = Plugins;
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
   wifiState: string;
   status = 'Sleep';
   msgs: string;
 
   msgWriting: string;
 
-  constructor() {
-    WifiDirect.addListener('wifiState', (state: {isEnabled: boolean}) => {
-      this.wifiState = 'Wifi ' + state.isEnabled ? 'on' : 'off';
+  onDiscovering = false;
+  stateListener: PluginListenerHandle;
+  requestListener: PluginListenerHandle;
+
+  constructor() {}
+
+  ngOnInit() {
+    this.stateListener = WifiDirect.addListener('wifiStateChanged', (state: {isEnabled: boolean}) => {
+      console.log(state.isEnabled);
+      this.wifiState = 'Wifi ' + (state.isEnabled ? 'on' : 'off');
+      console.log(this.wifiState);
     });
   }
 
-  discoverPeers() {
-    this.status = 'Discovery started';
-    WifiDirect.discoverPeers()
-        .then(({devices}) => {
-          this.status = 'Discovery successfull';
-          console.log(devices);
+  ngOnDestroy() {
+    this.stateListener.remove();
+  }
+
+  startDiscoveringPeers() {
+    WifiDirect.startDiscoveringPeers()
+        .then(() => {
+          this.status = 'Discovery started';
+          this.onDiscovering = true;
+
+          this.requestListener = WifiDirect.addListener('peersDiscovered', (req: {devices: WifiP2pDevice[]}) => {
+            console.log(req.devices);
+          });
         })
         .catch(err => {
           console.error(err);
+          this.onDiscovering = false;
           this.status = 'Discovery failed';
         });
   }
@@ -41,5 +57,19 @@ export class HomePage {
 
   writeMsg(msg: CustomEvent) {
     this.msgWriting = msg.detail.value;
+  }
+
+  stopDiscoveringPeers() {
+    WifiDirect.stopDiscoveringPeers()
+        .then(() => {
+          this.onDiscovering = false;
+          this.requestListener.remove();
+          this.status = 'Discovery stopped';
+        })
+        .catch(err => {
+          console.error(err);
+          this.onDiscovering = true;
+          this.status = 'Stopping discovery failed';
+        });
   }
 }
