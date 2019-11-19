@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DeviceStatus, WifiP2pDevice} from 'capacitor-wifi-direct';
 
 @Component({
@@ -8,13 +8,13 @@ import {DeviceStatus, WifiP2pDevice} from 'capacitor-wifi-direct';
 })
 export class PeersDevicesListComponent implements OnInit {
   @Input() devices: WifiP2pDevice[];
+  @Output() deviceSelected = new EventEmitter<WifiP2pDevice>();
 
   constructor() { }
 
   ngOnInit() {}
 
   deviceState(state: DeviceStatus) {
-    console.log(DeviceStatus[state]);
     return DeviceStatus[state];
   }
 }
