@@ -26,10 +26,6 @@ export class ChatingComponent implements OnInit, OnDestroy {
     this.infoListener = WifiDirect.addListener('connectionInfoAvailable', (info: WifiP2pInfo) => {
       console.log(info);
     });
-
-    this.requestListener = WifiDirect.addListener('peersDiscovered', (req: { devices: WifiP2pDevice[] }) => {
-      console.log(req.devices);
-    });
   }
 
   ngOnDestroy() {
