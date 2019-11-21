@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular';
 import {PluginListenerHandle, Plugins} from '@capacitor/core';
 import {WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
@@ -10,17 +10,32 @@ const {App, WifiDirect} = Plugins;
   templateUrl: './chating.component.html',
   styleUrls: ['./chating.component.scss'],
 })
-export class ChatingComponent implements OnInit {
+export class ChatingComponent implements OnInit, OnDestroy {
 
   msgs: string;
   msgWriting: string;
+  private infoListener: PluginListenerHandle;
+  private requestListener: PluginListenerHandle;
 
   constructor(
     private modalCtrl: ModalController,
     private toastCtrl: ToastController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.infoListener = WifiDirect.addListener('connectionInfoAvailable', (info: WifiP2pInfo) => {
+      console.log(info);
+    });
+
+    this.requestListener = WifiDirect.addListener('peersDiscovered', (req: { devices: WifiP2pDevice[] }) => {
+      console.log(req.devices);
+    });
+  }
+
+  ngOnDestroy() {
+    this.infoListener.remove();
+    this.requestListener.remove();
+  }
 
   sendMsg() {
 
@@ -35,7 +50,7 @@ export class ChatingComponent implements OnInit {
       .then(() => {
         this.toastCtrl.create({
           message: 'Disconnected',
-          closeButtonText: 'ok'
+          showCloseButton: true
         })
           .then(toast => toast.present());
         this.modalCtrl.dismiss();
@@ -44,7 +59,7 @@ export class ChatingComponent implements OnInit {
         console.log(reason);
         this.toastCtrl.create({
           message: 'Disconnection failed',
-          closeButtonText: 'ok'
+          showCloseButton: true
         })
           .then(toast => toast.present());
       });
