@@ -87,7 +87,7 @@ export class HomePage implements OnInit, OnDestroy {
       .then(() => {
         this.toastCtrl.create({
           message: 'Connected',
-          closeButtonText: 'ok'
+          showCloseButton: true
         })
           .then(toast => toast.present());
         this.stopDiscoveringPeers();
@@ -105,7 +105,7 @@ export class HomePage implements OnInit, OnDestroy {
       .then(() => {
         this.toastCtrl.create({
           message: 'You\'re hosting',
-          closeButtonText: 'ok'
+          showCloseButton: true
         })
           .then(toast => toast.present());
         this.status = 'You\'re hosting';
