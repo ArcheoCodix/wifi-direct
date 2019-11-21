@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon name="log-out" slot="icon-only" (click)="disconnect()"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Chat
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-textarea>{{ msgs }}</ion-textarea>
+  <ion-textarea (ionChange)="writeMsg($event)"></ion-textarea>
+
+  <ion-button (click)="sendMsg()">Send</ion-button>
+</ion-content>
