@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {PluginListenerHandle, Plugins} from '@capacitor/core';
 import {WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
-import {ModalController, ToastController} from "@ionic/angular";
-import {ChatingComponent} from "../components/chating/chating.component";
+import {ModalController, ToastController} from '@ionic/angular';
+import {ChatingComponent} from '../components/chating/chating.component';
 
 const {App, WifiDirect} = Plugins;
 
@@ -51,20 +51,18 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   startDiscoveringPeers() {
-    WifiDirect.startDiscoveringPeers()
-      .then(() => {
-        this.status = 'Discovery started';
-        this.onDiscovering = true;
+    this.status = 'Discovery started';
+    this.onDiscovering = true;
 
-        this.requestListener = WifiDirect.addListener('peersDiscovered', (req: { devices: WifiP2pDevice[] }) => {
-          this.devices = req.devices;
-        });
-      })
-      .catch(err => {
+    WifiDirect.startDiscoveringPeers((req, err) => {
+      if (!err) {
         console.error(err);
         this.onDiscovering = false;
         this.status = 'Discovery failed';
-      });
+      } else {
+        this.devices = req.devices;
+      }
+    });
   }
 
   stopDiscoveringPeers() {
