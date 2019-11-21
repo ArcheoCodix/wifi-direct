@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import {PeersDevicesListComponent} from '../components/peers-devices-list/peers-devices-list.component';
+import {ChatingComponent} from '../components/chating/chating.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,11 @@ import {PeersDevicesListComponent} from '../components/peers-devices-list/peers-
   ],
   declarations: [
     HomePage,
-    PeersDevicesListComponent
+    PeersDevicesListComponent,
+    ChatingComponent
+  ],
+  entryComponents: [
+    ChatingComponent
   ]
 })
 export class HomePageModule {}

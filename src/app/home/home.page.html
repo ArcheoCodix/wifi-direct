@@ -10,18 +10,20 @@
   <h3>{{ wifiState }}</h3>
   <h3>{{ status }}</h3>
 
-  <ion-spinner *ngIf="onDiscovering" name="dots"></ion-spinner>
   <ion-button (click)="onDiscovering ? stopDiscoveringPeers() : startDiscoveringPeers()">
     {{ onDiscovering ? 'Stop' : 'Discover'}}
+  </ion-button>
+  <ion-spinner *ngIf="onDiscovering" name="dots"></ion-spinner>
+
+  <ion-button (click)="host()">
+    Host
   </ion-button>
 
   <app-peers-devices
       [devices]="devices"
-      (deviceSelected)="connection($event)"
+      (deviceSelected)="connect($event)"
   ></app-peers-devices>
 
-  <ion-textarea>{{ msgs }}</ion-textarea>
-  <ion-textarea (ionChange)="writeMsg($event)"></ion-textarea>
+  <ion-button>ui display</ion-button>
 
-  <ion-button (click)="sendMsg()">Send</ion-button>
 </ion-content>
