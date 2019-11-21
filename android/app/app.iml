@@ -134,8 +134,5 @@
     <orderEntry type="module" module-name="capacitor-android" />
     <orderEntry type="module" module-name="capacitor-cordova-android-plugins" />
     <orderEntry type="module" module-name="capacitor-wifi-direct" />
-    <orderEntry type="module" module-name="capacitor-android" />
-    <orderEntry type="module" module-name="capacitor-cordova-android-plugins" />
-    <orderEntry type="module" module-name="capacitor-wifi-direct" />
   </component>
 </module>
