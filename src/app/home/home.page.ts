@@ -4,6 +4,7 @@ import {PluginListenerHandle, Plugins} from '@capacitor/core';
 import {WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
 import {ModalController, ToastController} from '@ionic/angular';
 import {ChatingComponent} from '../components/chating/chating.component';
+import {BehaviorSubject, Subscription} from 'rxjs';
 
 const {App, WifiDirect} = Plugins;
 
@@ -13,14 +14,17 @@ const {App, WifiDirect} = Plugins;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-  wifiState: string;
   status = 'Sleep';
   devices: WifiP2pDevice[];
+  private wifiState: { isEnabled: boolean };
 
   onDiscovering = false;
   stateListener: PluginListenerHandle;
-  requestListener: PluginListenerHandle;
+  stateObservable: Subscription;
   infoListener: PluginListenerHandle;
+
+  private dataWifiState = new BehaviorSubject<{ isEnabled: boolean }>(this.wifiState);
+  public currentState = this.dataWifiState.asObservable();
 
   constructor(
     private modalCtrl: ModalController,
@@ -29,11 +33,15 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.stateListener = WifiDirect.addListener('wifiStateChanged', (state: { isEnabled: boolean }) => {
-      this.wifiState = 'Wifi ' + (state.isEnabled ? 'on' : 'off');
+      this.dataWifiState.next(state);
+    });
+
+    this.stateObservable = this.currentState.subscribe((state) => {
+       this.wifiState = state;
     });
 
     this.infoListener = WifiDirect.addListener('connectionInfoAvailable', (info: WifiP2pInfo) => {
-      console.log(info);
+      console.log('home --- ', info);
       if (info.groupFormed) {
         this.status += ' ' + (info.isGroupOwner ? 'Host' : 'Client');
       }
@@ -43,6 +51,10 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.stateListener) {
       this.stateListener.remove();
+    }
+
+    if (this.stateObservable) {
+      this.stateObservable.unsubscribe();
     }
 
     if (this.infoListener) {
@@ -55,7 +67,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.onDiscovering = true;
 
     WifiDirect.startDiscoveringPeers((req, err) => {
-      if (!err) {
+      if (err) {
         console.error(err);
         this.onDiscovering = false;
         this.status = 'Discovery failed';
@@ -69,8 +81,6 @@ export class HomePage implements OnInit, OnDestroy {
     WifiDirect.stopDiscoveringPeers()
       .then(() => {
         this.onDiscovering = false;
-        this.requestListener.remove();
-        console.log(this.requestListener);
         this.status = 'Discovery stopped';
       })
       .catch(err => {
@@ -88,7 +98,7 @@ export class HomePage implements OnInit, OnDestroy {
           showCloseButton: true
         })
           .then(toast => toast.present());
-        this.stopDiscoveringPeers();
+        if (this.onDiscovering) { this.stopDiscoveringPeers(); }
         this.status = 'Connected';
         this.enterToChat();
       })
