@@ -37,7 +37,6 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/capacitor-cordova-android-plugins/capacitor-cordova-android-plugins.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
@@ -57,6 +56,7 @@
       <change beforePath="$PROJECT_DIR$/../src/app/app.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/app.component.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/app.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/components/chating/chating.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/components/chating/chating.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/components/chating/chating.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/components/chating/chating.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/components/peers-devices-list/peers-devices-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/components/peers-devices-list/peers-devices-list.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/components/peers-devices-list/peers-devices-list.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/components/peers-devices-list/peers-devices-list.component.spec.ts" afterDir="false" />
@@ -116,8 +116,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WiFiDirectBroadcastReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="51" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="646">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WifiDirect.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="901">
+              <caret line="78" column="67" selection-start-line="78" selection-start-column="67" selection-end-line="78" selection-end-column="87" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/net/wifi/p2p/WifiP2pDeviceList.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -132,9 +153,9 @@
       <list>
         <option value="$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WiFiDirectBroadcastReceiver.java" />
-        <option value="$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WifiDirect.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/fr/archeocodix/wifidirect/MainActivity.java" />
+        <option value="$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WifiDirect.java" />
+        <option value="$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WiFiDirectBroadcastReceiver.java" />
       </list>
     </option>
   </component>
@@ -150,7 +171,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -162,17 +182,21 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="8424586e" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-11-21T13:12:42.359Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="0123456789ABCDEF" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-11-24T16:37:40.179Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -283,14 +307,14 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4989339" weight="0.3289166" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49520257" weight="0.3289166" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49483308" weight="0.3289166" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49960256" weight="0.32969603" />
       <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49920508" weight="0.32969603" />
-      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.50479746" side_tool="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5042644" side_tool="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.5071542" side_tool="true" weight="0.289166" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5071542" side_tool="true" weight="0.18862042" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info active="true" anchor="bottom" id="Build" order="7" sideWeight="0.4914712" visible="true" weight="0.18082619" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49284577" visible="true" weight="0.28838658" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Find" order="9" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -308,11 +332,44 @@
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WiFiDirectBroadcastReceiver.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WiFiDirectBroadcastReceiver.java</url>
+          <line>34</line>
+          <properties />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WiFiDirectBroadcastReceiver.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>action.intern()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>intent.getType()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>intent.addCategory()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>groupOwnerAddress.getCanonicalHostName()</expression-string>
         <language-id>JAVA</language-id>
@@ -342,12 +399,12 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
           <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
         </state>
       </provider>
+      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/capacitor.config.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -383,33 +440,10 @@
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/os/Looper.java" />
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-28/android/app/LoadedApk.java" />
-    <entry file="file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WifiDirect.java">
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/net/wifi/p2p/WifiP2pDevice.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="111" column="6" selection-start-line="111" selection-start-column="6" selection-end-line="111" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4345#4346#0" expanded="true" />
-            <element signature="e#4391#4392#0" expanded="true" />
-            <element signature="e#4462#4463#0" expanded="true" />
-            <element signature="e#4529#4530#0" expanded="true" />
-            <element signature="e#4771#4772#0" expanded="true" />
-            <element signature="e#4817#4818#0" expanded="true" />
-            <element signature="e#4888#4889#0" expanded="true" />
-            <element signature="e#4955#4956#0" expanded="true" />
-            <element signature="e#5496#5497#0" expanded="true" />
-            <element signature="e#5542#5543#0" expanded="true" />
-            <element signature="e#5613#5614#0" expanded="true" />
-            <element signature="e#5680#5681#0" expanded="true" />
-            <element signature="e#5908#5909#0" expanded="true" />
-            <element signature="e#5954#5955#0" expanded="true" />
-            <element signature="e#6025#6026#0" expanded="true" />
-            <element signature="e#6092#6093#0" expanded="true" />
-            <element signature="e#6312#6313#0" expanded="true" />
-            <element signature="e#6358#6359#0" expanded="true" />
-            <element signature="e#6429#6430#0" expanded="true" />
-            <element signature="e#6496#6497#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="102">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -423,10 +457,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WifiDirect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="78" column="67" selection-start-line="78" selection-start-column="67" selection-end-line="78" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/net/wifi/p2p/WifiP2pDeviceList.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../node_modules/capacitor-wifi-direct/android/src/main/java/fr/archeocodix/wifidirect/WiFiDirectBroadcastReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="646">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
         </state>
       </provider>
     </entry>
