@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {PluginListenerHandle, Plugins} from '@capacitor/core';
-import {WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
+import {CallbackID, PluginListenerHandle, Plugins} from '@capacitor/core';
+import {FailureReason, WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
 import {ModalController, ToastController} from '@ionic/angular';
 import {ChatingComponent} from '../components/chating/chating.component';
 import {BehaviorSubject, Subscription} from 'rxjs';
@@ -19,12 +19,8 @@ export class HomePage implements OnInit, OnDestroy {
   private wifiState: { isEnabled: boolean };
 
   onDiscovering = false;
-  stateListener: PluginListenerHandle;
-  stateObservable: Subscription;
-  infoListener: PluginListenerHandle;
-
-  private dataWifiState = new BehaviorSubject<{ isEnabled: boolean }>(this.wifiState);
-  public currentState = this.dataWifiState.asObservable();
+  stateListener: CallbackID;
+  infoListener: CallbackID;
 
   constructor(
     private modalCtrl: ModalController,
@@ -32,33 +28,30 @@ export class HomePage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.stateListener = WifiDirect.addListener('wifiStateChanged', (state: { isEnabled: boolean }) => {
-      this.dataWifiState.next(state);
+    this.stateListener = WifiDirect.startWatchWifiState((state) => {
+      this.showToast('Wifi is ' + state.isEnabled ? 'ON' : 'OFF');
+      this.wifiState = state;
     });
 
-    this.stateObservable = this.currentState.subscribe((state) => {
-       this.wifiState = state;
-    });
-
-    this.infoListener = WifiDirect.addListener('connectionInfoAvailable', (info: WifiP2pInfo) => {
-      console.log('home --- ', info);
-      if (info.groupFormed) {
-        this.status += ' ' + (info.isGroupOwner ? 'Host' : 'Client');
+    this.infoListener = WifiDirect.startWatchConnectionInfo((info, err) => {
+      if (err) {
+        console.error('Connection Info : ', FailureReason[err]);
+      } else {
+        console.log('home --- ', info);
+        if (info.groupFormed) {
+          this.status += ' ' + (info.isGroupOwner ? 'Host' : 'Client');
+        }
       }
     });
   }
 
   ngOnDestroy() {
     if (this.stateListener) {
-      this.stateListener.remove();
-    }
-
-    if (this.stateObservable) {
-      this.stateObservable.unsubscribe();
+      WifiDirect.clearWifiStateWatch({id: this.stateListener});
     }
 
     if (this.infoListener) {
-      this.infoListener.remove();
+      WifiDirect.clearInfoConnectionWatch({id: this.infoListener});
     }
   }
 
@@ -68,7 +61,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     WifiDirect.startDiscoveringPeers((req, err) => {
       if (err) {
-        console.error(err);
+        console.error('Discover peers : ', FailureReason[err]);
         this.onDiscovering = false;
         this.status = 'Discovery failed';
       } else {
@@ -84,53 +77,54 @@ export class HomePage implements OnInit, OnDestroy {
         this.status = 'Discovery stopped';
       })
       .catch(err => {
-        console.error(err);
+        console.error('Stop Discover : ', FailureReason[err]);
         this.onDiscovering = true;
         this.status = 'Stopping discovery failed';
       });
   }
 
   connect(device: WifiP2pDevice) {
-    WifiDirect.connect({device})
-      .then(() => {
-        this.toastCtrl.create({
-          message: 'Connected',
-          showCloseButton: true
-        })
-          .then(toast => toast.present());
+    WifiDirect.connect({device}, (info, err) => {
+      if (err) {
+        console.error('Connection : ', FailureReason[err]);
+        this.status = 'Connection failed';
+      } else {
+        this.showToast('Connected');
         if (this.onDiscovering) { this.stopDiscoveringPeers(); }
         this.status = 'Connected';
-        this.enterToChat();
-      })
-      .catch(reason => {
-        console.log(reason);
-        this.status = 'Connection failed';
-      });
+        this.enterToChat({info});
+      }
+    });
   }
 
   host() {
     WifiDirect.host()
       .then(() => {
-        this.toastCtrl.create({
-          message: 'You\'re hosting',
-          showCloseButton: true
-        })
-          .then(toast => toast.present());
+        this.showToast('You\'re hosting');
         this.status = 'You\'re hosting';
-        this.enterToChat();
+        this.enterToChat({info: undefined});
       })
       .catch(reason => {
-        console.log(reason);
+        console.error('Host : ', FailureReason[reason]);
         this.status = 'hosting failed';
       });
   }
 
-  enterToChat() {
+  enterToChat(props: {info: WifiP2pInfo}) {
     this.modalCtrl.create({
-      component: ChatingComponent
+      component: ChatingComponent,
+      componentProps: props
     })
       .then(modal => {
         modal.present();
       });
+  }
+
+  private showToast(message: string) {
+    this.toastCtrl.create({
+      message,
+      showCloseButton: true
+    })
+      .then(toast => toast.present());
   }
 }
