@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ModalController, ToastController} from '@ionic/angular';
-import {PluginListenerHandle, Plugins} from '@capacitor/core';
-import {WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
+import {CallbackID, PluginListenerHandle, Plugins} from '@capacitor/core';
+import {FailureReason, WifiP2pDevice, WifiP2pInfo} from 'capacitor-wifi-direct';
 
 const {App, WifiDirect} = Plugins;
 
@@ -11,10 +11,12 @@ const {App, WifiDirect} = Plugins;
   styleUrls: ['./chating.component.scss'],
 })
 export class ChatingComponent implements OnInit, OnDestroy {
+  @Input() info: WifiP2pInfo;
 
+  peerType: string;
   msgs: string;
   msgWriting: string;
-  private infoListener: PluginListenerHandle;
+  private infoListener: CallbackID;
   private requestListener: PluginListenerHandle;
 
   constructor(
@@ -23,14 +25,29 @@ export class ChatingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.infoListener = WifiDirect.addListener('connectionInfoAvailable', (info: WifiP2pInfo) => {
-      console.log('chating --- ', info);
+    if (this.info) {
+      if (this.info.groupFormed) {
+        this.peerType = this.info.isGroupOwner ? 'Host' : 'Client';
+      } else {
+        this.modalCtrl.dismiss();
+      }
+    }
+
+    this.infoListener = WifiDirect.startWatchConnectionInfo((info, err) => {
+      if (err) {
+        console.error('Connection Info : ', FailureReason[err]);
+      } else {
+        console.log('chating --- ', info);
+        if (info.groupFormed) {
+          this.peerType = info.isGroupOwner ? 'Host' : 'Client';
+        }
+      }
     });
   }
 
   ngOnDestroy() {
     if (this.infoListener) {
-      this.infoListener.remove();
+      WifiDirect.clearInfoConnectionWatch({id: this.infoListener});
     }
 
     if (this.requestListener) {
@@ -47,22 +64,6 @@ export class ChatingComponent implements OnInit, OnDestroy {
   }
 
   disconnect() {
-    WifiDirect.disconnect()
-      .then(() => {
-        this.toastCtrl.create({
-          message: 'Disconnected',
-          showCloseButton: true
-        })
-          .then(toast => toast.present());
-        this.modalCtrl.dismiss();
-      })
-      .catch(reason => {
-        console.log(reason);
-        this.toastCtrl.create({
-          message: 'Disconnection failed',
-          showCloseButton: true
-        })
-          .then(toast => toast.present());
-      });
+    this.modalCtrl.dismiss();
   }
 }
